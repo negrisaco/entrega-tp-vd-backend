@@ -1,3 +1,12 @@
+El motor de base de datos utilizado es MySQL.
+
+src/sql/database.sql contiene scrips sql para el correcto funcionamiento del backend y algunos datos iniciales
+de prueba.
+
+src/config/dbConnection.js contiene los datos para la correcta conexión con la BD, checkear usuario y contraseñas,
+cambiarlos de ser necesario. En mi local use como usuario 'root' y contraseña 'password'.
+
+
 Trabajo Práctico | Reclutamiento
 
 Ejercicio 1 2

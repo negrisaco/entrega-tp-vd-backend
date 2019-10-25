@@ -53,13 +53,6 @@ INSERT INTO materia VALUES (5, 'Programacion', 6);
 INSERT INTO materia VALUES (6, 'Nutricion del Niño', 2);
 INSERT INTO materia VALUES (7, 'Física I', 7);
 
-/* Carrera */
-INSERT INTO carrera VALUES (1, 'Abogacia');
-INSERT INTO carrera VALUES (2, 'Ingeniería en Informática');
-INSERT INTO carrera VALUES (3, 'Trabajo Social');
-INSERT INTO carrera VALUES (4, 'Licenciatura en Nutrición');
-INSERT INTO carrera VALUES (5, 'Comunicación Social');
-INSERT INTO carrera VALUES (6, 'Profesorado de Educación Física');
 
  /* Alumnos */
 INSERT INTO alumno VALUES (1, '26902806', 'Salvador', 'Sánchez', 'Buenos Aires', 'La Boca 12', '950254837', '1991/03/28', 'H');
