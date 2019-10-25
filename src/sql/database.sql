@@ -1,3 +1,5 @@
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+
 DROP DATABASE IF EXISTS universidad;
 CREATE DATABASE universidad CHARACTER SET utf8mb4;
 USE universidad;
@@ -7,7 +9,6 @@ CREATE TABLE materia (
     nombre VARCHAR(100) NOT NULL,
     legajo_profesor_a INT REFERENCES profesor(legajo_profesor)
 );
-
 
 CREATE TABLE profesor (
     legajo_profesor INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -20,7 +21,6 @@ CREATE TABLE profesor (
     fecha_nacimiento DATE NOT NULL
 );
 
-/* ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'; */
 CREATE TABLE alumno (
     legajo INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     dni VARCHAR(9) UNIQUE,
@@ -33,22 +33,16 @@ CREATE TABLE alumno (
     genero ENUM('H', 'M', 'O') NOT NULL
 );
 
-CREATE TABLE carrera (
-  codigo_carrera INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(100) NOT NULL
-);
-
 CREATE TABLE alumno_cursa_materia (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   legajo_a INT REFERENCES alumno(legajo),
   codigo_materia_a INT REFERENCES materia(codigo_materia)
 );
 
-CREATE TABLE alumno_pertenece_carrera (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  legajo_a INT REFERENCES alumno(legajo),
-  codigo_carrera_a INT REFERENCES carrera(codigo_carrera)
-);
+CREATE TRIGGER trigger_delete_profesor BEFORE DELETE ON profesor 
+FOR each row
+DELETE FROM materia WHERE legajo_profesor_a = OLD.legajo_profesor;
+
 
 /* Materia */
 INSERT INTO materia VALUES (1, 'Derecho I', 5);
@@ -139,32 +133,5 @@ INSERT INTO alumno_cursa_materia VALUES (31, 7, 3);
 INSERT INTO alumno_cursa_materia VALUES (32, 6, 5);
 INSERT INTO alumno_cursa_materia VALUES (33, 8, 7);
 
-
-/* Alumno_pertenece_carrera */
-INSERT INTO alumno_pertenece_carrera VALUES (1, 1, 3);
-INSERT INTO alumno_pertenece_carrera VALUES (2, 2, 3);
-INSERT INTO alumno_pertenece_carrera VALUES (3, 2, 4);
-INSERT INTO alumno_pertenece_carrera VALUES (4, 3, 5);
-INSERT INTO alumno_pertenece_carrera VALUES (5, 4, 5);
-INSERT INTO alumno_pertenece_carrera VALUES (6, 5, 6);
-INSERT INTO alumno_pertenece_carrera VALUES (7, 6, 6);
-INSERT INTO alumno_pertenece_carrera VALUES (8, 7, 2);
-INSERT INTO alumno_pertenece_carrera VALUES (9, 8, 1);
-INSERT INTO alumno_pertenece_carrera VALUES (10, 9, 2);
-INSERT INTO alumno_pertenece_carrera VALUES (11, 10, 1);
-INSERT INTO alumno_pertenece_carrera VALUES (12, 11, 3);
-INSERT INTO alumno_pertenece_carrera VALUES (13, 12, 5);
-INSERT INTO alumno_pertenece_carrera VALUES (14, 13, 4);
-INSERT INTO alumno_pertenece_carrera VALUES (15, 14, 2);
-INSERT INTO alumno_pertenece_carrera VALUES (16, 15, 5);
-INSERT INTO alumno_pertenece_carrera VALUES (17, 16, 2);
-INSERT INTO alumno_pertenece_carrera VALUES (18, 17, 2);
-INSERT INTO alumno_pertenece_carrera VALUES (19, 18, 3);
-INSERT INTO alumno_pertenece_carrera VALUES (20, 19, 1);
-INSERT INTO alumno_pertenece_carrera VALUES (21, 20, 1);
-INSERT INTO alumno_pertenece_carrera VALUES (22, 21, 1);
-INSERT INTO alumno_pertenece_carrera VALUES (23, 21, 3);
-INSERT INTO alumno_pertenece_carrera VALUES (24, 22, 6);
-INSERT INTO alumno_pertenece_carrera VALUES (25, 23, 5);
-INSERT INTO alumno_pertenece_carrera VALUES (26, 24, 5);
-INSERT INTO alumno_pertenece_carrera VALUES (27, 24, 6);
+/* Test Trigger */
+DELETE FROM profesor WHERE legajo_profesor = 5;
